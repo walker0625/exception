@@ -31,6 +31,7 @@ public class ErrorPageController {
         return "error/404"; // error-page라고 하면 패키지 인식이 안됨(error로만 인식)
     }
 
+    // 스프링 부트는 이러한 기능이 BasicErrorController에 기본적으로 구현되어 있음
     @RequestMapping("/error-page/500")
     public String errorPage500(HttpServletRequest request, HttpServletResponse response) {
         log.info("PAGE ERROR 500");
@@ -38,9 +39,12 @@ public class ErrorPageController {
         return "error/500";
     }
 
-    @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
+    // 스프링 부트는 이러한 기능이 BasicErrorController에 기본적으로 구현되어 있음
+    @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE) // 더 자세한 쪽이 우선순위
     public ResponseEntity<Map<String,Object>> errorJson500(HttpServletRequest request, HttpServletResponse response) {
+
         log.info("API ERROR 500");
+
         Map<String, Object> result = new HashMap<>();
         Exception ex = (Exception) request.getAttribute(ERROR_EXCEPTION);
 
